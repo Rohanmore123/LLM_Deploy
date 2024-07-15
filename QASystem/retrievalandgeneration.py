@@ -1,25 +1,35 @@
-from langchain.chains import RetrievalQA
-from langchain.vectorstores import FAISS
-from langchain.llms.bedrock import Bedrock
+# from langchain.chains import RetrievalQA
+from langchain.chains.retrieval_qa.base import RetrievalQA
+# from langchain.vectorstores import FAISS
+# from langchain.llms.bedrock import Bedrock
 import boto3
 from langchain.prompts import PromptTemplate
-from QASystem.ingestion import get_vector_store
-from QASystem.ingestion import data_ingestion
+# from QASystem.ingestion import get_vector_store
+# from QASystem.ingestion import data_ingestion
+from ingestion import get_vector_store
+from ingestion import data_ingestion
 from langchain_community.embeddings import BedrockEmbeddings
+from langchain_community.llms.bedrock import Bedrock
+from langchain_community.vectorstores import FAISS
+from langchain_aws import BedrockLLM
+import json
 
-bedrock=boto3.client(service_name="bedrock-runtime")
+from botocore.exceptions import ClientError
+
+bedrock=boto3.client(service_name="bedrock-runtime",region_name="ap-south-1")
 bedrock_embeddings=BedrockEmbeddings(model_id="amazon.titan-embed-text-v1",client=bedrock)
 
-
+# Set the model ID, e.g., Llama 3 8b Instruct.
+model_id = "meta.llama3-8b-instruct-v1:0"
 prompt_template = """
 
 Human: Use the following pieces of context to provide a 
 concise answer to the question at the end but usse atleast summarize with 
-250 words with detailed explaantions. If you don't know the answer, 
+250 words with detailed explainations. If you don't know the answer, 
 just say that you don't know, don't try to make up an answer.
 <context>
 {context}
-</context
+</context>
 
 Question: {question}
 
@@ -31,7 +41,7 @@ PROMPT=PromptTemplate(
 
 
 def get_llama2_llm():
-    llm=Bedrock(model_id="meta.llama2-13b-chat-v1",client=bedrock)
+    llm=BedrockLLM(model_id="mistral.mixtral-8x7b-instruct-v0:1",client=bedrock)
     
     return llm
 

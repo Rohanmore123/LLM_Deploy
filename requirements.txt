@@ -8,3 +8,14 @@ langchain_community
 chromadb
 pinecone
 awscli
+pypdf
+faiss-cpu
+langchain_aws
+tiktoken
+langchain-openai
+openai
+fastapi
+uvicorn
+python-dotenv
+python-multipart
+-e .
