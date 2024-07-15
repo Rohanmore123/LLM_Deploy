@@ -15,6 +15,7 @@ def main():
         #         docs=data_ingestion()
         #         get_vector_store(docs)
         #         st.success("done")
+        
                 
         if st.button("mistral model"):
             with st.spinner("processing..."):
