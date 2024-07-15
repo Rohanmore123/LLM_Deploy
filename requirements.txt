@@ -3,7 +3,7 @@ langchainhub
 bs4
 tiktoken
 openai
-boto3==1.34.37
+boto3==1.34.139
 langchain_community
 chromadb
 pinecone
